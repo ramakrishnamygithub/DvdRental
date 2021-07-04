@@ -18,6 +18,24 @@
        /WEB-INF/ApplicationContext.xml
      </param-value>
 	</context-param>
+	<!-- Error Handling -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/web/jps/common/commonerror.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/web/jps/common/commonerror.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/web/jps/common/commonerror.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/web/jps/common/commonerror.jsp</location>
+	</error-page>
+	<!-- end Error Handling -->
 	<servlet>
 		<servlet-name>dwr</servlet-name>
 		<servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
@@ -58,7 +76,7 @@
 		<servlet-name>LoginController</servlet-name>
 		<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
-	<!-- <filter>
+	<filter>
 		<filter-name>trimFilter</filter-name>
 		<filter-class>com.cj.trim.trimFilter</filter-class>
 		<init-param>
@@ -114,6 +132,6 @@
 	<filter-mapping>
 		<filter-name>BrowserCache</filter-name>
 		<url-pattern>*.js</url-pattern>
-	</filter-mapping> -->
-	
+	</filter-mapping>
+
 </web-app>
