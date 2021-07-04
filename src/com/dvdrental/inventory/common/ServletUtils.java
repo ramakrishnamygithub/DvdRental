@@ -33,14 +33,6 @@ public class ServletUtils {
 		this.response=res;
 		this.sessionid=session.getId();
 		this.context=session.getServletContext();
-		Cookie[] cookies=this.request.getCookies();
-		if(cookies!=null) {
-			int i=0;
-			while(i <cookies.length) {
-				System.out.println(cookies[i].getName()+" "+cookies[i].getValue());
-				i++;
-			}
-		}
 	}
 	
 	public String getCookieValue(String name) {

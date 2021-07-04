@@ -80,6 +80,7 @@ public class SSOLoginContoller extends HttpServlet {
 
 			ip=InetAddress.getLocalHost();
 			network=NetworkInterface.getByInetAddress(ip);
+
 			if(preferences.isMacAddressCheck()==true) {
 
 				byte[] mac=network.getHardwareAddress(); 
@@ -99,13 +100,14 @@ public class SSOLoginContoller extends HttpServlet {
 			user=userDao.loadByEmail(strEmailId);
 			//check the user accessed from authorized address or not 
 			if(user!=null && systemIsAuthenticatedChk ) {
-				if(user!=null && user.getUserAuthentication().equalsIgnoreCase("y"));
-				ip=InetAddress.getByName(request.getRemoteAddr());
-				if(ip.getHostAddress().equalsIgnoreCase(user.getUserIpAddress())) {
-					isUserAccessFrmAuthSystemChk=true;
-				}else {
-					isUserAccessFrmAuthSystemChk=false;
-					strUserLoginFailStatus=MessageConstants.UN_AUTHERISED_ACCESS_POINT;
+				if(user!=null && user.getUserAuthentication().equalsIgnoreCase("y")) {
+					ip=InetAddress.getByName(request.getRemoteAddr());
+					if(ip.getHostAddress().equalsIgnoreCase(user.getUserIpAddress())) {
+						isUserAccessFrmAuthSystemChk=true;
+					}else {
+						isUserAccessFrmAuthSystemChk=false;
+						strUserLoginFailStatus=MessageConstants.UN_AUTHERISED_ACCESS_POINT;
+					}
 				}
 			}
 			if(isUserAccessFrmAuthSystemChk && systemIsAuthenticatedChk) {
@@ -149,69 +151,77 @@ public class SSOLoginContoller extends HttpServlet {
 
 					if(userList!=null && !userList.isEmpty()) {
 						validUser=(User)userList.get(0);
-						strUserLoginFailStatus=MessageConstants.STATUS_FAILED;
+						//strUserLoginFailStatus=MessageConstants.STATUS_FAILED;
 					}else {
 						if(preferences.getIsLoginFailCheck().equalsIgnoreCase("y")) {
 							if(user!=null) {
 								user.setLoginFailCount(user.getLoginFailCount()+1);
 								user.setLoginFailTime(new Date());
 								userDao.updateUser(user);
-								strUserLoginFailStatus="login Failed "+(preferences.getLoginFailCountLimit()-user.getLoginFailCount()+1);
+								strUserLoginFailStatus="Incorrect email or password.  </br>"+(preferences.getLoginFailCountLimit()-user.getLoginFailCount()+1+" attempts remaining.");
 
 							}
 						}
 					}
-				}
-
-
-				if(validUser!=null && validUser.getUserStatus().equalsIgnoreCase("A")) {
-					ssoBean=new SingleSignOnBean();
-					ssoBean.setUserEmail(strEmailId);
-					ssoBean.setIsActive("yes");
-					ssoBean.setjSessionId(session.getId());
-					ssoBean.setUserEncryptedPwd(strPwdEncrypted);
-					servletUtils.storeDataInContext(ssoBean);
-					strRedirectURL=""+CSURL_PATH+"?jsid="+session.getId()+"";
-				}
-				if(strRedirectURL!=null) {
 
 
 
-					servletUtils.setCookieValue(servletUtils.SSO_SESSIONID,session.getId());
-					servletUtils.setCookieValue(servletUtils.SSO_USERMAIL,strEmailId);
-					servletUtils.setCookieValue(servletUtils.SSO_USERPWD,strPwdEncrypted);
+					if(validUser!=null && validUser.getUserStatus().equalsIgnoreCase("A")) {
+						ssoBean=new SingleSignOnBean();
+						ssoBean.setUserEmail(strEmailId);
+						ssoBean.setIsActive("yes");
+						ssoBean.setjSessionId(session.getId());
+						ssoBean.setUserEncryptedPwd(strPwdEncrypted);
+						servletUtils.storeDataInContext(ssoBean);
+						strRedirectURL=""+CSURL_PATH+"?jsid="+session.getId()+"";
 
-					/*
-					 * response.addHeader("Access-Control-Allow-Origin",
-					 * "http://localhost:8080/DvdRental");
-					 * 
-					 * response.addHeader("Access-Control-Allow-Headers","Content-Type, *");
-					 * response.addHeader("Access-Control-Allow-Credentials","true");
-					 * response.addHeader("Access-Control-Allow-Methods","GET,POST");
-					 */
-					//response.sendRedirect(strRedirectURL);
-					request.getRequestDispatcher("Login").forward(request, response);
-					//request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
+						if(strRedirectURL!=null) {
+							servletUtils.setCookieValue(servletUtils.SSO_SESSIONID,session.getId());
+							servletUtils.setCookieValue(servletUtils.SSO_USERMAIL,strEmailId);
+							servletUtils.setCookieValue(servletUtils.SSO_USERPWD,strPwdEncrypted);
+
+							/*
+							 * response.addHeader("Access-Control-Allow-Origin",
+							 * "http://localhost:8080/DvdRental");
+							 * 
+							 * response.addHeader("Access-Control-Allow-Headers","Content-Type, *");
+							 * response.addHeader("Access-Control-Allow-Credentials","true");
+							 * response.addHeader("Access-Control-Allow-Methods","GET,POST");
+							 */
+							//response.sendRedirect(strRedirectURL);
+							request.getRequestDispatcher("Login").forward(request, response);
+							//request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
 
 
+						}else {
+							if(strUserLoginFailStatus==null) {
+								strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
+							}
+							request.setAttribute("loginstatus",strUserLoginFailStatus);
+							request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
+						}
+					}else {
+						if(strUserLoginFailStatus==null) {
+							strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
+						}
+						request.setAttribute("loginstatus",strUserLoginFailStatus);
+						request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
+
+					}
 				}else {
 					if(strUserLoginFailStatus==null) {
 						strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
-
 					}
-
-
 					request.setAttribute("loginstatus",strUserLoginFailStatus);
 					request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
 				}
-
 			}else {
 				if(strUserLoginFailStatus==null) {
 					strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
 				}
 				request.setAttribute("loginstatus",strUserLoginFailStatus);
 				request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
-				
+
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

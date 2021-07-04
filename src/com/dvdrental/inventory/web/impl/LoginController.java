@@ -47,7 +47,6 @@ public class LoginController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("came to loginController");
 		LoggerHelper.intialize();
 		LoggerHelper.logInfo(this.getClass().getName(), "doPost", "entering into method");
 		ResourceBundle account=null;
@@ -59,7 +58,6 @@ public class LoginController extends HttpServlet {
 
 		ServletUtils servletUtils=new ServletUtils(request,response);
 		String strJsessionIdFromCookie=servletUtils.getCookieValue(servletUtils.SSO_SESSIONID);
-		System.out.println("strJsessionIdFromCookie=="+strJsessionIdFromCookie);
 		String strPwdEncrypted="";
 
 		if(strJsessionIdFromCookie !=null) {
@@ -69,8 +67,6 @@ public class LoginController extends HttpServlet {
 			strEmailId=request.getParameter("email");
 			strPwd=request.getParameter("password");
 		}
-		System.out.println("strEmailId=="+strEmailId);
-		System.out.println("strPwd=="+strPwd);
 		HttpSession session=request.getSession(false);
 		ServletContext context=getServletContext();
 		String strIpAddress=request.getRemoteAddr();
@@ -102,7 +98,6 @@ public class LoginController extends HttpServlet {
 
 					String strSessionId=session.getId();
 					request.setAttribute("logoff", MessageConstants.LOGOFF_SUCCESS);
-
 					strUserRequestUrl=request.getRequestURL().toString();
 					appProps=(ApplicationProperties)context.getAttribute("apppropps");
 					account=ResourceBundle.getBundle("config");
@@ -130,21 +125,15 @@ public class LoginController extends HttpServlet {
 				}else {
 					String encryptionScheme=DesEncryption.DESEDE_ENCRYPTION_SCHEME;
 					DesEncryption encryptor=new DesEncryption(encryptionScheme,IConstants.ENCRYPT_KEY);
-					System.out.println("133 strEmailId=="+strEmailId+"  strPwdEncrypted=="+strPwdEncrypted+" strPwd=="+strPwd);
 					if(strEmailId!=null && (strPwdEncrypted!=null || strPwd!=null)) {
 						if(((strPwd!=null) && !strPwd.equals("")) && ((strPwdEncrypted==null || strPwdEncrypted.equals("")))) {
 							strPwdEncrypted=encryptor.encrypt(strPwd);
-							System.out.println("136 :: strPwdEncrypted=="+strPwdEncrypted);
 						}
 						userList=userDao.loadByEmailPwd(strEmailId, strPwdEncrypted);
-						System.out.println("136");
-						System.out.println("strPwdEncrypted==="+strPwdEncrypted);
-						System.out.println("userList=="+userList);
 						if(!userList.isEmpty()) {
 							String strStatus=userBean.getUserStatus();
 
 							if(strStatus.equals("A")) {
-								System.out.println("141");
 								SingleSignOnBean ssoBean=new SingleSignOnBean();
 								ssoBean.setIsActive("yes");
 								ssoBean.setjSessionId(session.getId());
@@ -155,15 +144,12 @@ public class LoginController extends HttpServlet {
 								User currentUser=(User)userList.get(0);
 								String strJSessionID=session.getId();
 
-
-								System.out.println("153");
 								//here setting attributes in context and session objects
 								session.setAttribute("user", currentUser);
 								account=ResourceBundle.getBundle("config");
 								int mb=1024*1024;
 								Runtime runtime=Runtime.getRuntime();
 								System.out.println("#### Heap utilization statistics[MB] ####");
-
 								System.out.println("Used Memory :"+(runtime.totalMemory()-runtime.freeMemory()/mb));
 								System.out.println("Total Memory:"+runtime.totalMemory()/mb);
 								System.out.println("Max Memory:"+runtime.maxMemory()/mb);
@@ -177,23 +163,25 @@ public class LoginController extends HttpServlet {
 								 * 
 								 * }
 								 */
-								System.out.println("174");
 								if(currentUser.getIsFirstLogin().equals("y")) {
-									System.out.println("181");
 									session.setAttribute("msgforlogin", "You are accessing DvdRental for the first time");
 									request.getRequestDispatcher("/web/jsp/common/FirstLogInPage.jsp").forward(request, response);
 								}else if (pwdexpremainingday<=0) {
-									System.out.println("185");
 									session.setAttribute("msgforlogin", "your password has been expired");  
 									request.getRequestDispatcher("/web/jsp/setup/FirstLoginPage.jsp").forward(request, response);
 								}else {
-									System.out.println("189");
 									request.getRequestDispatcher("/web/jsp/common/dvdrentalindex.jsp").forward(request, response);
+									currentUser.setLoginFailCount(0);
+									userDao.updateUser(currentUser);
 								}
+							}else {
+								request.setAttribute("logerr", MessageConstants.STATUS_FAILED);
+								request.getRequestDispatcher("/web/jsp/login/LoginPage.jsp").forward(request, response);
+
 							}
 
 						}else {
-							request.setAttribute("logerr", MessageConstants.STATUS_FAILED);
+							request.setAttribute("logger", MessageConstants.LOGIN_FAILED);
 							request.getRequestDispatcher("/web/jsp/login/LoginPage.jsp").forward(request, response);
 
 						}
