@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Dvd Rental</title>
 <link rel="icon" href="/DvdRental/resources/images/Favcon.png"
@@ -80,8 +80,7 @@ body {
 					<div id="errortextcontentdiv1" class="col-sm-9 text-white">
 						<h1>Something's wrong here</h1>
 						<span>We can't find the page you're looking for. Check out
-							our Help Center or head back to Login Page</span></br>
-						<br>
+							our Help Center or head back to Login Page</span></br> <br>
 						<button type="button" class="btn btn-outline-light">Help</button>
 						<button id="loginbtn" type="button" class="btn btn-outline-light">Login</button>
 					</div>
