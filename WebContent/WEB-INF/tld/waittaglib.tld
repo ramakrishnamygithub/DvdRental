@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>  
+<!DOCTYPE taglib  
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"  
+        "http://java.sun.com/j2ee/dtd/web-jsptaglibrary_1_1.dtd"> 
+
+<taglib>
+
+	<tlibversion>1.4</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>Wait taglib</shortname>
+	<uri>http://www.servletsuite.com/servlets/waittag</uri>
+	<info>Wait taglib</info>
+
+
+	<tag>
+		<name>wait</name>
+		<tagclass>com.cj.wait.waitTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>provides an intermediate page for long time calculated requests</info>
+		<attribute>
+			<name>cond</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>infoPage</name>
+		<tagclass>com.cj.wait.infoPageTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>implements an info page</info>
+	</tag>
+	<tag>
+		<name>realPage</name>
+		<tagclass>com.cj.wait.realPageTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>implements a real calculation</info>
+	</tag>
+</taglib> 
