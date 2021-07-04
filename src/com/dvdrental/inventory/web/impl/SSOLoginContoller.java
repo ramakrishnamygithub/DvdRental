@@ -74,41 +74,42 @@ public class SSOLoginContoller extends HttpServlet {
 			PreferencesDao preferencesDao=(PreferencesDao)objDbFunctions.getDaoImplBean(SpringBeanConstants.PreferncesDaoImpl, context);
 			String encryptionScheme=DesEncryption.DESEDE_ENCRYPTION_SCHEME;
 			DesEncryption encryptor=new DesEncryption(encryptionScheme,IConstants.ENCRYPT_KEY);
+			Preferences preferences=preferencesDao.loadPreferenceData();
 			String strPwdEncrypted="";
 			boolean isValidUserLogin=true;
 
 			ip=InetAddress.getLocalHost();
-			
-			
-			
 			network=NetworkInterface.getByInetAddress(ip);
+			if(preferences.isMacAddressCheck()==true) {
 
-			/*
-			 * byte[] mac=network.getHardwareAddress(); StringBuilder sb=new
-			 * StringBuilder(); for(int i=0;i<mac.length;i++) {
-			 * sb.append(String.format("%02X%s", mac[i],(i < mac.length-1)? "-" : "")); }
-			 * systemMacAddress=sb.toString();
-			 * if(!systemMacAddress.equalsIgnoreCase("00-16-76-12-AE-1E")) {
-			 * systemIsAuthenticatedChk=false;
-			 * strUserLoginFailStatus=MessageConstants.UN_AUTHERISED_SYSTEM; }
-			 */
-			//IF U WANT SYSTEM AUTHANTICATION BY CHECKING MAC ADDRESS YOU CAN REPLACE ABOVE MAC ADDRESS BY YOUR SYSTEM MAC
-			//AND REMOVE THE ABOVE COMMENT LINES AND COMMENT THE FOLLOWING LINE
-			systemIsAuthenticatedChk=true;
+				byte[] mac=network.getHardwareAddress(); 
+				StringBuilder sb=new StringBuilder(); 
+				for(int i=0;i<mac.length;i++) {
+					sb.append(String.format("%02X%s", mac[i],(i < mac.length-1)? "-" : ""));
+				}
+				systemMacAddress=sb.toString();
+				if(!systemMacAddress.equalsIgnoreCase(preferences.getMacAddress())) {
+					systemIsAuthenticatedChk=false;
+					strUserLoginFailStatus=MessageConstants.UN_AUTHERISED_SYSTEM; 
+				}
+
+			}else {
+				systemIsAuthenticatedChk=true;
+			}
 			user=userDao.loadByEmail(strEmailId);
 			//check the user accessed from authorized address or not 
-			if(user!=null) {
-				/*if(user!=null && user.getUserAuthentication().equalsIgnoreCase("y"));
+			if(user!=null && systemIsAuthenticatedChk ) {
+				if(user!=null && user.getUserAuthentication().equalsIgnoreCase("y"));
 				ip=InetAddress.getByName(request.getRemoteAddr());
 				if(ip.getHostAddress().equalsIgnoreCase(user.getUserIpAddress())) {
 					isUserAccessFrmAuthSystemChk=true;
 				}else {
 					isUserAccessFrmAuthSystemChk=false;
 					strUserLoginFailStatus=MessageConstants.UN_AUTHERISED_ACCESS_POINT;
-				}*/
+				}
 			}
 			if(isUserAccessFrmAuthSystemChk && systemIsAuthenticatedChk) {
-				Preferences preferences=preferencesDao.loadPreferenceData();
+
 				if(preferences.getIsLoginFailCheck().equalsIgnoreCase("y")) {
 					if(user!=null) {
 						if(user.getLoginFailCount()>=preferences.getLoginFailCountLimit()) {
@@ -161,8 +162,8 @@ public class SSOLoginContoller extends HttpServlet {
 						}
 					}
 				}
-				
-				
+
+
 				if(validUser!=null && validUser.getUserStatus().equalsIgnoreCase("A")) {
 					ssoBean=new SingleSignOnBean();
 					ssoBean.setUserEmail(strEmailId);
@@ -173,13 +174,13 @@ public class SSOLoginContoller extends HttpServlet {
 					strRedirectURL=""+CSURL_PATH+"?jsid="+session.getId()+"";
 				}
 				if(strRedirectURL!=null) {
-					
 
-					 
+
+
 					servletUtils.setCookieValue(servletUtils.SSO_SESSIONID,session.getId());
 					servletUtils.setCookieValue(servletUtils.SSO_USERMAIL,strEmailId);
 					servletUtils.setCookieValue(servletUtils.SSO_USERPWD,strPwdEncrypted);
-					
+
 					/*
 					 * response.addHeader("Access-Control-Allow-Origin",
 					 * "http://localhost:8080/DvdRental");
@@ -189,33 +190,40 @@ public class SSOLoginContoller extends HttpServlet {
 					 * response.addHeader("Access-Control-Allow-Methods","GET,POST");
 					 */
 					//response.sendRedirect(strRedirectURL);
-					//request.getRequestDispatcher("Login").forward(request, response);
-					request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
+					request.getRequestDispatcher("Login").forward(request, response);
+					//request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
 
-					
+
 				}else {
 					if(strUserLoginFailStatus==null) {
 						strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
 
 					}
-					
-					
-					request.setAttribute("logger",strUserLoginFailStatus);
+
+
+					request.setAttribute("loginstatus",strUserLoginFailStatus);
 					request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
 				}
 
+			}else {
+				if(strUserLoginFailStatus==null) {
+					strUserLoginFailStatus=MessageConstants.LOGIN_FAILED;
+				}
+				request.setAttribute("loginstatus",strUserLoginFailStatus);
+				request.getRequestDispatcher("/web/jsp/login/Login.jsp").forward(request, response);
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			Logger.getLogger(this.getClass().getName()).error("Exception occurred in ssologincontroller", e);
 			try {
-				request.setAttribute("logger",strUserLoginFailStatus);
+				request.setAttribute("loginstatus",strUserLoginFailStatus);
 				request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
 			}catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}finally {
-			
+
 		}
 		if(LoggerHelper.intialize()!=null) {
 			LoggerHelper.logInfo(this.getClass().getName(), "processRequest", "Entering into method");

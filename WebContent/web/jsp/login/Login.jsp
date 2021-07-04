@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <%
-String strContextPath=request.getContextPath();
+	String strContextPath = request.getContextPath();
 %>
 <script type="text/javascript"
 	src="<%=strContextPath%>/resources/scripts/library/jquery/jquery-3.6.0.js"></script>
@@ -20,15 +20,20 @@ String strContextPath=request.getContextPath();
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="<%=strContextPath%>/resources/scripts/library/bootstrap5/bootstrap.min.js"></script>
-<% String status=(String)request.getAttribute("logger") ;
-	  if(status==null){
-		  status="";
-	  }
-	 
-	%>
+<%
+	String loginStatus = (String) request.getAttribute("loginstatus");
+	if (loginStatus == null) {
+		loginStatus = "";
+	}
+%>
 </head>
 <body>
 	<style>
+body {
+	background-color: hsl(200, 65%, 20%);
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
 #containerDiv {
 	border-radius: 10px;
 	height: 600px;
@@ -79,8 +84,8 @@ String strContextPath=request.getContextPath();
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-2"></div>
-							<div class="col-8">
+							<div class="col-1"></div>
+							<div class="col-10">
 								<form action="SSOLoginContoller" class="" method="post">
 									<div class="form-group ">
 										<label for="email">Email:</label> <input type="email"
@@ -98,10 +103,10 @@ String strContextPath=request.getContextPath();
 										</label>
 									</div>
 									<button type="submit" class="btn btn-primary">Log In</button>
-									<br> <span style="color: red;"><%=status %></span>
+									<br> <span style="color: red;"><%=loginStatus%></span>
 								</form>
 							</div>
-							<div class="col-2"></div>
+							<div class="col-1"></div>
 						</div>
 						<div class="row" style="height: 20%;">
 							<div class="col-12"></div>
