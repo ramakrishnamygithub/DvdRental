@@ -81,7 +81,8 @@ public class SSOLoginContoller extends HttpServlet {
 			ip=InetAddress.getLocalHost();
 			network=NetworkInterface.getByInetAddress(ip);
 
-			if(preferences.isMacAddressCheck()==true) {
+			//if(preferences.isMacAddressCheck()==true) {
+				if(false) {
 
 				byte[] mac=network.getHardwareAddress(); 
 				StringBuilder sb=new StringBuilder(); 

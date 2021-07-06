@@ -12,14 +12,22 @@
 <%
 	String strContextPath = request.getContextPath();
 %>
-<script type="text/javascript"
+<%-- <script type="text/javascript"
 	src="<%=strContextPath%>/resources/scripts/library/jquery/jquery-3.6.0.js"></script>
-<link rel="stylesheet"
-	href="<%=strContextPath%>/resources/css/bootstrap5/bootstrap.min.css">
+<link rel="stylesheet" href="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/css/bootstrap.min.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
-	src="<%=strContextPath%>/resources/scripts/library/bootstrap5/bootstrap.min.js"></script>
+	src="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script> --%>
+	<script type="text/javascript"
+	src="<%=strContextPath%>/resources/scripts/library/jquery/jquery-3.6.0.js"></script>
+<link rel="stylesheet"
+	href="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+<!--  <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<script
+	src="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+
 <%
 	String loginStatus = (String) request.getAttribute("loginstatus");
 	if (loginStatus == null) {

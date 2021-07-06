@@ -15,11 +15,12 @@
 <script type="text/javascript"
 	src="<%=strContextPath%>/resources/scripts/library/jquery/jquery-3.6.0.js"></script>
 <link rel="stylesheet"
-	href="<%=strContextPath%>/resources/css/bootstrap5/bootstrap.min.css">
+	href="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+<!--  <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="<%=strContextPath%>/resources/scripts/library/bootstrap5/bootstrap.min.js"></script>
+	src="<%=strContextPath%>/resources/scripts/library/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 $(document).ready(function(){
 

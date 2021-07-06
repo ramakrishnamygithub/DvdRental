@@ -39,6 +39,17 @@ public class CountryManager {
 
 	}
 	
+	
+	public List<Country> getAllCountries() {
+		//WebContext webContext= WebContextFactory.get();
+		ServletContext servletContext= WebContextFactory.get().getServletContext();
+		DBFunctions dbFunctions=new DBFunctions();
+		List<Country> countiesList=null;
+		CountryDao countryDao=(CountryDao) dbFunctions.getDaoImplBean(SpringBeanConstants.CountryDaoImpl, servletContext);
+		countiesList= countryDao.getAllCountries();
+			
+	  return countiesList;
+	}
 
 
 }
