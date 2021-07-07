@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.dvdrental.inventory.common.DBFunctions;
+import com.dvdrental.inventory.common.LoggerHelper;
 import com.dvdrental.inventory.common.SpringBeanConstants;
 import com.dvdrental.inventory.dao.CountryDao;
 import com.dvdrental.inventory.dao.impl.CountryDaoImpl;
@@ -39,14 +40,34 @@ public class CountryManager {
 
 	}
 	
-	
+	@RemoteMethod
 	public List<Country> getAllCountries() {
 		//WebContext webContext= WebContextFactory.get();
+		LoggerHelper.intialize();
+		if(LoggerHelper.isInfoEnabled()) {
+			LoggerHelper.logInfo(this.getClass().getName(), "getAllCountries", "Entering the method");
+		}
 		ServletContext servletContext= WebContextFactory.get().getServletContext();
 		DBFunctions dbFunctions=new DBFunctions();
-		List<Country> countiesList=null;
 		CountryDao countryDao=(CountryDao) dbFunctions.getDaoImplBean(SpringBeanConstants.CountryDaoImpl, servletContext);
+
+		List<Country> countiesList=null;
+		try {
 		countiesList= countryDao.getAllCountries();
+		}catch(Exception e) {
+			e.printStackTrace();
+			if(LoggerHelper.isDebugEnabled()) {
+				LoggerHelper.logDebug(this.getClass().getName(), "getAllCountries", "Exception occured...");
+			}
+			
+		}finally {
+			dbFunctions=null;
+			countryDao=null;
+			
+		}
+		if(LoggerHelper.isInfoEnabled()) {
+			LoggerHelper.logInfo(this.getClass().getName(), "getAllCountries", "Entering the method");
+		}
 			
 	  return countiesList;
 	}

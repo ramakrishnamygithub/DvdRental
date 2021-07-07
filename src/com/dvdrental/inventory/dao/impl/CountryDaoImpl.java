@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import com.dvdrental.inventory.common.LoggerHelper;
 import com.dvdrental.inventory.dao.CountryDao;
 import com.dvdrental.inventory.model.Country;
 
@@ -79,8 +80,26 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public List<Country> getAllCountries() {
-
-		return hibernateTemplate.loadAll(Country.class);
+		LoggerHelper.intialize();
+		if(LoggerHelper.isInfoEnabled()) {
+			LoggerHelper.logInfo(this.getClass().getName(), "getAllCountries", "Entering the method");
+		}
+		 List<Country> countriesList=null;
+		 try {
+			 countriesList= hibernateTemplate.loadAll(Country.class);
+		 }catch(Exception e) {
+			 e.printStackTrace();
+			 if(LoggerHelper.isDebugEnabled()) {
+					LoggerHelper.logDebug(this.getClass().getName(), "getAllCountries", "Exception occured...");
+				}
+		 }finally {
+			 
+		 }
+		 if(LoggerHelper.isInfoEnabled()) {
+				LoggerHelper.logInfo(this.getClass().getName(), "getAllCountries", "Leaving the method");
+			}
+		 
+		return countriesList;
 	}
 
 }
