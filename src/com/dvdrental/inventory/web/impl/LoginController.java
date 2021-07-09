@@ -121,7 +121,9 @@ public class LoginController extends HttpServlet {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					request.getRequestDispatcher("").forward(request, response);
+					System.out.println("CS_PATH=="+CS_PATH);
+					//request.getRequestDispatcher("").forward(request, response);
+					response.sendRedirect(CS_PATH);
 				}else {
 					String encryptionScheme=DesEncryption.DESEDE_ENCRYPTION_SCHEME;
 					DesEncryption encryptor=new DesEncryption(encryptionScheme,IConstants.ENCRYPT_KEY);

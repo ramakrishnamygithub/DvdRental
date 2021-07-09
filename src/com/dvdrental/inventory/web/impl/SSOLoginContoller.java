@@ -129,7 +129,9 @@ public class SSOLoginContoller extends HttpServlet {
 					strPwdEncrypted=encryptor.encrypt(password);
 				}
 				account=ResourceBundle.getBundle("config");
-				if(strUserRequestURL.indexOf(account.getString("ACCOUNT.EXTERNAL_IP"))<0) {
+				if(strUserRequestURL.indexOf(account.getString("Account.EXTERNAL_IP"))<0) {
+					
+					
 					if(MSURL_PATH==null) {
 						MSURL_PATH=account.getString("Account.MSURL_LANPATH");
 					}
