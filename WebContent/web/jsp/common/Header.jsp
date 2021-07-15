@@ -83,7 +83,7 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<a class="dropdown-item"
 								href="<%=strContextPath%>/web/jsp/masters/Country.jsp">Country</a>
-							<a class="dropdown-item" href="#">City</a>
+							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/City.jsp">City</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Something else here</a>
 						</div></li>

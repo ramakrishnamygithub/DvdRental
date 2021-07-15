@@ -13,16 +13,18 @@ public class EncryptKey {
 		String decryptedPassword="";
 		
 		
-		/*
-		 * decryptedPassword=encryptor.decrypt(ecryptedPassword);
-		 * System.out.println("decryptedPassword=="+decryptedPassword);
-		 */
+		
+		  decryptedPassword=encryptor.decrypt(ecryptedPassword);
+		  System.out.println("decryptedPassword=="+decryptedPassword);
+		 
 		 
 		
 		
-		  decryptedPassword="rk@getset";
-		  ecryptedPassword=encryptor.encrypt(decryptedPassword);
-		  System.out.println("decryptedPassword==="+ecryptedPassword);
+		/*
+		 * decryptedPassword="rk@getset";
+		 * ecryptedPassword=encryptor.encrypt(decryptedPassword);
+		 * System.out.println("decryptedPassword==="+ecryptedPassword);
+		 */
 		 
 		
 		

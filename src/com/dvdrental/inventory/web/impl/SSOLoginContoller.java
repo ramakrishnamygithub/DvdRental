@@ -192,7 +192,9 @@ public class SSOLoginContoller extends HttpServlet {
 							 * response.addHeader("Access-Control-Allow-Methods","GET,POST");
 							 */
 							//response.sendRedirect(strRedirectURL);
+							System.out.println("195");
 							request.getRequestDispatcher("Login").forward(request, response);
+							System.out.println("197");
 							//request.getRequestDispatcher("/web/jsp/common/commonerror.jsp").forward(request, response);
 
 

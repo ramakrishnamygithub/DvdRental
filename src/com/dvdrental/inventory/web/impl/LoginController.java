@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        System.out.println("login controller 49");
 		LoggerHelper.intialize();
 		LoggerHelper.logInfo(this.getClass().getName(), "doPost", "entering into method");
 		ResourceBundle account=null;
@@ -112,12 +112,12 @@ public class LoginController extends HttpServlet {
 					}
 					try {
 						if(servletUtils!=null) {
-							servletUtils.removeAllCookies();
+							//servletUtils.removeAllCookies();
 							if(strEmailId!=null) {
-								servletUtils.removeDataFromContext(strEmailId);
+							//	servletUtils.removeDataFromContext(strEmailId);
 							}
 						}
-						session.invalidate();
+						//session.invalidate();
 					}catch(Exception e) {
 						e.printStackTrace();
 					}

@@ -16,9 +16,9 @@
 <script type="text/javascript" src="<%=strContextPath%>/dwr/engine.js"></script>
 <script type="text/javascript" src="<%=strContextPath%>/dwr/util.js"></script>
 <script type="text/javascript"
-	src="<%=strContextPath%>/dwr/interface/countryService.js"></script>
+	src="<%=strContextPath%>/dwr/interface/cityService.js"></script>
 <script type="text/javascript"
-	src="<%=strContextPath%>/resources/scripts/masters/country.js"></script>
+	src="<%=strContextPath%>/resources/scripts/masters/city.js"></script>
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
   
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script> -->
@@ -26,6 +26,60 @@
 var strContextPath ="<%=strContextPath%>";
 
 	console.log("strContextPath===" + strContextPath);
+	function init() {
+		  dwr.util.useLoadingMessage();
+		}
+
+		if (window.addEventListener) {
+		  window.addEventListener("load", init, false);
+		}
+		else if (window.attachEvent) {
+		 window.attachEvent("onload", init);
+		}
+		else {
+		  window.onload = init;
+		}
+		function useLoadingMessage(message) {
+			console.log('useLoadingMessage');
+			  var loadingMessage;
+			  if (message) loadingMessage = "ramakrishna";
+			  else loadingMessage = "ramakrishna";
+
+			  dwr.engine.setPreHook(function() {
+			    var disabledZone = $('disabledZone');
+			    if (!disabledZone) {
+			      disabledZone = document.createElement('div');
+			      disabledZone.setAttribute('id', 'disabledZone');
+			      disabledZone.style.position = "absolute";
+			      disabledZone.style.zIndex = "1000";
+			      disabledZone.style.left = "0px";
+			      disabledZone.style.top = "0px";
+			      disabledZone.style.width = "100%";
+			      disabledZone.style.height = "100%";
+			      document.body.appendChild(disabledZone);
+			      var messageZone = document.createElement('div');
+			      messageZone.setAttribute('id', 'messageZone');
+			      messageZone.style.position = "absolute";
+			      messageZone.style.top = "100px";
+			      messageZone.style.right = "100px";
+			      messageZone.style.background = "red";
+			      messageZone.style.color = "white";
+			      messageZone.style.fontFamily = "Arial,Helvetica,sans-serif";
+			      messageZone.style.padding = "4px";
+			      disabledZone.appendChild(messageZone);
+			      var text = document.createTextNode(loadingMessage);
+			      messageZone.appendChild(text);
+			    }
+			    else {
+			      $('messageZone').innerHTML = loadingMessage;
+			      disabledZone.style.visibility = 'visible';
+			    }
+			  });
+
+			  dwr.engine.setPostHook(function() {
+			    $('disabledZone').style.visibility = 'hidden';
+			  });
+			}
 </script>
 <style>
 #modalheader {
@@ -41,13 +95,13 @@ var strContextPath ="<%=strContextPath%>";
 	<div style="height: 400px;">
 		<ul class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">Masters</a></li>
-			<li class="breadcrumb-item active">Country</li>
+			<li class="breadcrumb-item active">City</li>
 		</ul>
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-8 ">
 				<div class="table-responsive" style="height: 300px;">
-					<table id="countriesListTable"
+					<table id="citiesListTable"
 						class="table table-bordered  table-hover"></table>
 					<div id="hiddencontent">
 						<!-- The Modal -->
@@ -67,9 +121,9 @@ var strContextPath ="<%=strContextPath%>";
 									<div class="modal-body">
 										<div id="modalbody">
 											<div class="form-group">
-												<input id="countryId" type="hidden" value="" /> <label
-													for="country">Country:</label> <input type="text"
-													class="form-control" id="country">
+												<input id="cityId" type="hidden" value="" /> <label
+													for="city">City:</label> <input type="text"
+													class="form-control" id="city">
 											</div>
 											<div class="form-group">
 												<label for="lastupdate">Last update:</label> <input
@@ -85,7 +139,7 @@ var strContextPath ="<%=strContextPath%>";
 									<!-- Modal footer -->
 									<div class="modal-footer">
 										<button type="button" class="btn btn-primary"
-											data-dismiss="modal" onclick="modifyCountry(this);">Save</button>
+											data-dismiss="modal" onclick="modifyCity(this);">Save</button>
 										<button type="button" class="btn btn-danger"
 											data-dismiss="modal">Close</button>
 									</div>

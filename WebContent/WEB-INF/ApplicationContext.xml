@@ -46,9 +46,11 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
+				
+				<value>com.dvdrental.inventory.model.Preferences</value>
 				<value>com.dvdrental.inventory.model.Country</value>
 				<value>com.dvdrental.inventory.model.User</value>
-				<value>com.dvdrental.inventory.model.Preferences</value>
+				<value>com.dvdrental.inventory.model.City</value>
 			</list>
 		</property>
 	</bean>
@@ -60,6 +62,15 @@
 	
 	
 	<bean class="com.dvdrental.inventory.dao.impl.CountryDaoImpl" name="countryDaoImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hbtemplate"/>
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbctemplate"/>
+		</property>
+		
+	</bean>
+	<bean class="com.dvdrental.inventory.dao.impl.CityDaoImpl" name="cityDaoImpl">
 		<property name="hibernateTemplate">
 			<ref bean="hbtemplate"/>
 		</property>
