@@ -51,6 +51,7 @@
 				<value>com.dvdrental.inventory.model.Country</value>
 				<value>com.dvdrental.inventory.model.User</value>
 				<value>com.dvdrental.inventory.model.City</value>
+				<value>com.dvdrental.inventory.model.Address</value>
 			</list>
 		</property>
 	</bean>
@@ -71,6 +72,15 @@
 		
 	</bean>
 	<bean class="com.dvdrental.inventory.dao.impl.CityDaoImpl" name="cityDaoImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hbtemplate"/>
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbctemplate"/>
+		</property>
+		
+	</bean>
+	<bean class="com.dvdrental.inventory.dao.impl.AddressDaoImpl" name="addressDaoImpl">
 		<property name="hibernateTemplate">
 			<ref bean="hbtemplate"/>
 		</property>

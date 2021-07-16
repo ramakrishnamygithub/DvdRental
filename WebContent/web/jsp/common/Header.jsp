@@ -84,6 +84,7 @@
 							<a class="dropdown-item"
 								href="<%=strContextPath%>/web/jsp/masters/Country.jsp">Country</a>
 							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/City.jsp">City</a>
+							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/Address.jsp">Address</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Something else here</a>
 						</div></li>
