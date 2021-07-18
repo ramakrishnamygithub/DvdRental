@@ -52,6 +52,9 @@
 				<value>com.dvdrental.inventory.model.User</value>
 				<value>com.dvdrental.inventory.model.City</value>
 				<value>com.dvdrental.inventory.model.Address</value>
+				<value>com.dvdrental.inventory.model.Actor</value>
+				<value>com.dvdrental.inventory.model.Language</value>
+				<value>com.dvdrental.inventory.model.Category</value>
 			</list>
 		</property>
 	</bean>
@@ -81,6 +84,33 @@
 		
 	</bean>
 	<bean class="com.dvdrental.inventory.dao.impl.AddressDaoImpl" name="addressDaoImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hbtemplate"/>
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbctemplate"/>
+		</property>
+		
+	</bean>
+	<bean class="com.dvdrental.inventory.dao.impl.ActorDaoImpl" name="actorDaoImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hbtemplate"/>
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbctemplate"/>
+		</property>
+		
+	</bean>
+	<bean class="com.dvdrental.inventory.dao.impl.LanguageDaoImpl" name="languageDaoImpl">
+		<property name="hibernateTemplate">
+			<ref bean="hbtemplate"/>
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbctemplate"/>
+		</property>
+		
+	</bean>
+	<bean class="com.dvdrental.inventory.dao.impl.CategoryDaoImpl" name="categoryDaoImpl">
 		<property name="hibernateTemplate">
 			<ref bean="hbtemplate"/>
 		</property>

@@ -85,6 +85,9 @@
 								href="<%=strContextPath%>/web/jsp/masters/Country.jsp">Country</a>
 							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/City.jsp">City</a>
 							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/Address.jsp">Address</a>
+							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/Actor.jsp">Actor</a>
+							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/Language.jsp">Language</a>
+							<a class="dropdown-item" href="<%=strContextPath%>/web/jsp/masters/Category.jsp">Category</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Something else here</a>
 						</div></li>

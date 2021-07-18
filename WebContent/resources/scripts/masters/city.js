@@ -21,7 +21,7 @@ function showCities(){
 				  tableBodyContent+="<tr id="+citiesList[i].cityId+" >" +
 				  	                "<td>"+citiesList[i].city+"</td>" +
 				  	              "<td>"+citiesList[i].country.country+"</td>" +
-				  				     "<td>"+citiesList[i].lastUpdate+"</td>" +
+				  				   "<td>"+(new Date(citiesList[i].lastUpdate)).getDate()+"-"+(new Date(citiesList[i].lastUpdate)).getMonth()+1+"-"+ (new Date(citiesList[i].lastUpdate)).getFullYear()+" "+(new Date(citiesList[i].lastUpdate)).getHours()+":"+(new Date(citiesList[i].lastUpdate)).getMinutes()+":"+(new Date(citiesList[i].lastUpdate)).getSeconds()+"</td>" +
 				  				     "<td><img data-toggle='modal' data-target='#myModal' onclick='showDetails(this);'  style='height: 20px;' src='"+strContextPath+"/resources/images/edit-solid.svg'>" +
 				  				     "<img data-toggle='modal'  data-target='#myConfirmModal' onclick='confirmDelete(this);' style='height: 20px;margin-left:5px;'  src='"+strContextPath+"/resources/images/trash-alt-regular.svg'></td>" +
 				  				 "</tr>";

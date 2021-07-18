@@ -19,7 +19,8 @@ function showCountries(){
 			  for(var i=0;i<countriesList.length;i++){
 				  tableBodyContent+="<tr id="+countriesList[i].countryId+" >" +
 				  	                "<td>"+countriesList[i].country+"</td>" +
-				  				     "<td>"+countriesList[i].lastUpdate+"</td>" +
+					  				   "<td>"+(new Date(countriesList[i].lastUpdate)).getDate()+"-"+(new Date(countriesList[i].lastUpdate)).getMonth()+1+"-"+ (new Date(countriesList[i].lastUpdate)).getFullYear()+" "+(new Date(countriesList[i].lastUpdate)).getHours()+":"+(new Date(countriesList[i].lastUpdate)).getMinutes()+":"+(new Date(countriesList[i].lastUpdate)).getSeconds()+"</td>" +
+
 				  				     "<td><img data-toggle='modal' data-target='#myModal' onclick='showDetails(this);'  style='height: 20px;' src='"+strContextPath+"/resources/images/edit-solid.svg'>" +
 				  				     "<img data-toggle='modal'  data-target='#myConfirmModal' onclick='confirmDelete(this);' style='height: 20px;margin-left:5px;'  src='"+strContextPath+"/resources/images/trash-alt-regular.svg'></td>" +
 				  				 "</tr>";

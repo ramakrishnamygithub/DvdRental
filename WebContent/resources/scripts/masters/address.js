@@ -16,16 +16,16 @@ function showAddresses(){
 		  //useLoadingMessage("<div class='spinner-border text-success'></div>");
 		  $("#addressesListTable").empty();
 		  if(addressesList.length>0){
-			  var tableHeaderContent="<thead class='thead-light' ><tr><th>Address</th><th>Address2</th><th>District</th><th>City</th><th>Country</th><th>Postal Code</th><th>Phone</th><th>Last Update</th><th>Action</th></tr></thead>";
+			  var tableHeaderContent="<thead class='thead-light' ><tr><th>Address</th><th>District</th><th>City</th><th>Country</th><th>Phone</th><th>Last Update</th><th>Action</th></tr></thead>";
 			  var tableBodyContent="<tbody>";
 			  for(var i=0;i<addressesList.length;i++){
 				  tableBodyContent+="<tr id="+addressesList[i].addressId+" >" +
 				  	                "<td>"+addressesList[i].address+"</td>" +
-				  	              "<td>"+addressesList[i].address2+"</td>" +
+				  	            
 				  	            "<td>"+addressesList[i].district+"</td>" +
 				  	              "<td>"+addressesList[i].city.city+"</td>" +
 				  	            "<td>"+addressesList[i].city.country.country+"</td>" +
-				  	          "<td>"+addressesList[i].postalCode+"</td>" +
+				  	          
 				  	        "<td>"+addressesList[i].phone+"</td>" +
 				  			"<td>"+(new Date(addressesList[i].lastUpdate)).getDate()+"-"+(new Date(addressesList[i].lastUpdate)).getMonth()+1+"-"+ (new Date(addressesList[i].lastUpdate)).getFullYear()+" "+(new Date(addressesList[i].lastUpdate)).getHours()+":"+(new Date(addressesList[i].lastUpdate)).getMinutes()+":"+(new Date(addressesList[i].lastUpdate)).getSeconds()+"</td>" +
 				  				     "<td><img data-toggle='modal' data-target='#myModal' onclick='showDetails(this);'  style='height: 20px;' src='"+strContextPath+"/resources/images/edit-solid.svg'>" +
@@ -33,7 +33,7 @@ function showAddresses(){
 				  				 "</tr>";
 			  }
 			  tableBodyContent+="</tbody>";
-			  var tableFootContent="<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><td></tr></tfoot>";
+			  var tableFootContent="<tfoot><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><td></tr></tfoot>";
 			  var tableContent=tableHeaderContent+tableBodyContent+tableFootContent;
 			  $("#addressesListTable").append(tableContent);
 				
