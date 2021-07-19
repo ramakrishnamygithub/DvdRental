@@ -1,5 +1,6 @@
 package com.dvdrental.inventory.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import org.directwebremoting.annotations.DataTransferObject;
 @DataTransferObject
 @Entity
 @Table(name="address")
-public class Address {
+public class Address implements Serializable {
 	@Id
 	@Column(name="address_id")
 	public int addressId;
